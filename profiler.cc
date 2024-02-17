@@ -193,6 +193,17 @@ void CuptiProfiler::ProfilingCallbackHandler(
                 {
                     if (pCallbackInfo->callbackSite == CUPTI_API_ENTER)
                     {
+
+		      if (callbackId == CUPTI_DRIVER_TRACE_CBID_cuLaunchKernel ||
+                        callbackId == CUPTI_DRIVER_TRACE_CBID_cuLaunchKernel_ptsz)
+                        {
+			    pProfilingData->kernelName = pCallbackInfo->symbolName;
+			}
+			else
+			{
+			    pProfilingData->kernelName = pCallbackInfo->functionName;
+			}
+		      
                         EnableProfiling(pProfilingData);
                     }
                     else
